@@ -3,7 +3,7 @@ from flask import Flask
 from flask_cors import CORS
 from .config.Config import api, db
 from .config.DBConfig import DBConfig
-from .resoureces import ns
+from .controller.controller import register_namespaces
 
 app = Flask(__name__)
 CORS(app)
@@ -11,8 +11,7 @@ app.config['JSON_AS_ASCII'] = False
 app.config.from_object(DBConfig)
 api.init_app(app)
 db.init_app(app)
-
-# api.add_namespace(ns)
+register_namespaces(api)
 
 
 if __name__ == "__main__":
