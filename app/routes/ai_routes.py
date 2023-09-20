@@ -4,8 +4,8 @@ from ..config.Config import api
 
 
 def ai_routes(ai_ns):
-    @ai_ns.route("/ai")
-    class aiTest(Resource):
+    @ai_ns.route("/test")
+    class AiTest(Resource):
         @ai_ns.expect(api.model('SentimentAnalysis', {
             'new_sentence': fields.String(description='100자 이내의 문장.', example = '영화가 재미 없습니다.')
         }))

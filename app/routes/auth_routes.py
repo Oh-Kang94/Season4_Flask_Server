@@ -4,21 +4,8 @@ from ..config.Config import api
 from ..services.user_service import UsersService
 from ..models.Api_User import User_fields, login_fields
 
-def user_routes(user_ns):
-    @user_ns.route('/register')
-    class Register(Resource):
-        @api.expect(User_fields)
-        def post(self):
-            data = api.payload
-            email = data['email']
-
-            if UsersService.get_user_by_email(email):
-                return {'message': 'User already exists'}, 400
-
-            new_user = UsersService.create_user(data)
-            return {'message': 'User created successfully', 'email': new_user.email}, 201
-
-    @user_ns.route('/login')
+def auth_routes(auth_ns):
+    @auth_ns.route('/')
     class Login(Resource):
         @api.expect(login_fields)
         def post(self):
@@ -37,20 +24,20 @@ def user_routes(user_ns):
                 }, 200
             return {'message': 'Invalid credentials'}, 401
 
-    @user_ns.route('/protected')
+    @auth_ns.route('/checkaccess')
     class Protected(Resource):
         @jwt_required()
         @api.expect(login_fields)
-        @user_ns.doc(security = 'Bearer')  
+        @auth_ns.doc(security = 'Bearer')  
 
         def post(self):
             current_user = get_jwt_identity()
             return {'message': f'Hello {current_user}'}
 
-    @user_ns.route('/getaccess')
+    @auth_ns.route('/getaccess')
     class Refresh(Resource):
         @jwt_required(refresh=True)
-        @user_ns.doc(security = 'Bearer')  
+        @auth_ns.doc(security = 'Bearer')  
         def post(self):
             current_user = get_jwt_identity()
             new_access_token = create_access_token(identity=current_user)
