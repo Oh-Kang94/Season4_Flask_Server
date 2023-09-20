@@ -3,13 +3,10 @@ from ..config.Config import db
 
 class User(db.Model):
     __tablename__ = "user"
-    id = db.Column(db.String(50), primary_key=True)
-    name = db.Column(db.String(50))
-    # students = db.relationship("Student", back_populates="course")
-
-
-# class Student (db .Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(50), unique=True)
-#     course_id = db.Column(db. ForeignKey("course.id"))
-#     course = db.relationship("Course", back_populates="students")
+    email = db.Column(db.String(50), primary_key=True)
+    refreshtoken = db.Column(db.String(200), nullable=True)  # refreshtoken을 nullable로 설정
+    password = db.Column(db.String(45))
+    name = db.Column(db.String(45))
+    nickname = db.Column(db.String(45))
+    insertdate = db.Column(db.String(45))
+    deletedate = db.Column(db.String(45), nullable=True)  # deletedate를 nullable로 설정
