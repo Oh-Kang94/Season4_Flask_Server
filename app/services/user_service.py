@@ -1,4 +1,4 @@
-from ..models.User import User
+from ..models.DBModel import User
 from ..config.Config import db
 class UsersService:
     @staticmethod
@@ -9,6 +9,7 @@ class UsersService:
             name= data['name'], 
             nickname = data['nickname'],
             insertdate = data['insertdate'],
+            address = data['address']
         )
         db.session.add(new_user)
         db.session.commit()
@@ -17,3 +18,10 @@ class UsersService:
     @staticmethod
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
+    
+    @staticmethod
+    def set_refreshtoken(email, refreshtoken):
+        user = User.query.filter_by(email=email).first()
+        user.refreshtoken = refreshtoken
+        db.session.commit()
+        return True

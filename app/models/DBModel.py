@@ -11,3 +11,6 @@ class User(db.Model):
     address = db.Column(db.String(45))
     insertdate = db.Column(db.String(45))
     deletedate = db.Column(db.String(45), nullable=True)  # deletedate를 nullable로 설정
+
+# class Movie(db.Model):
+#     __tablename__ = "movie"
