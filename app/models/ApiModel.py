@@ -13,7 +13,7 @@ User_fields = api.namespace('User').model('User', {
     'deletedate': fields.String(description='Delete Date', required=False, nullable=True, example=None),
 })
 
-Movie_fields = api.namespace('Movie').model('Movie', {
+Movie_fields = api.namespace('movie').model('movie', {
     'id': fields.Integer(description='ID', example=1),
     'ott': fields.String(description='OTT', example='Netflix'),
     'title': fields.String(description='Title', example='Inception'),

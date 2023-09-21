@@ -25,7 +25,6 @@ def movie_routes(movie_ns):
             responses={
             500: "Failed to get movies"
         })
-        @api.marshal_with(Movie_fields)
         def get(self):
             result = MoiveService.get_movie()
             if result:
