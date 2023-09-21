@@ -7,6 +7,7 @@ def user_routes(user_ns):
     @user_ns.route('/register')
     class Register(Resource):
         @api.expect(User_fields)
+        @user_ns.doc(description = '회원 가입',)  
         def post(self):
             data = api.payload
             email = data['email']
@@ -15,4 +16,4 @@ def user_routes(user_ns):
                 return {'message': 'User already exists'}, 400
 
             new_user = UsersService.create_user(data)
-            return {'message': 'User created successfully', 'email': new_user.email}, 201
+            return {'message': 'User created successfully', 'email': new_user.email}, 200

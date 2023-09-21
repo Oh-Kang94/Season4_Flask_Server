@@ -1,4 +1,4 @@
-from flask_restx import Resource
+from flask_restx import Resource, fields
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, create_refresh_token
 from ..config.Config import api
 from ..services.user_service import UsersService
@@ -8,6 +8,7 @@ def auth_routes(auth_ns):
     @auth_ns.route('/')
     class Login(Resource):
         @api.expect(login_fields)
+        @auth_ns.doc(description = '로그인 하는 route',)  
         def post(self):
             data = api.payload
             email = data['email']
@@ -38,7 +39,10 @@ def auth_routes(auth_ns):
     @auth_ns.route('/getaccess')
     class Refresh(Resource):
         @jwt_required(refresh=True)
-        @auth_ns.doc(security = 'Bearer')  
+        @auth_ns.expect(api.model('refresh_token', {
+            'refresh_token': fields.String(description='header에 refresh_token넣어줘야함.', example = 'asdjfnasj2ij123jacnjadsnasdfnj')
+        }))
+        @auth_ns.doc(security = 'Bearer', description = 'ACCESS_TOKEN을 발급 받기 위함.',)  
         def post(self):
             current_user = get_jwt_identity()
             new_access_token = create_access_token(identity=current_user)

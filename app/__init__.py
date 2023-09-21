@@ -6,6 +6,7 @@ from flask_cors import CORS
 from .config.Config import api, db, jwt
 from .config.DBConfig import DBConfig
 from .controller.controller import register_namespaces
+import warnings
 
 app = Flask(__name__)
 CORS(app)
@@ -21,4 +22,5 @@ register_namespaces(api)
 
 
 if __name__ == "__main__":
+    warnings.filterwarnings("ignore")
     app.run()

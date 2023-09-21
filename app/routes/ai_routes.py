@@ -6,10 +6,12 @@ from ..config.Config import api
 def ai_routes(ai_ns):
     @ai_ns.route("/test")
     class AiTest(Resource):
-        @ai_ns.expect(api.model('SentimentAnalysis', {
+        @ai_ns.expect(api.model('AITEST', {
             'new_sentence': fields.String(description='100자 이내의 문장.', example = '영화가 재미 없습니다.')
         }))
-        @ai_ns.doc(responses={
+        @ai_ns.doc(
+            description = '댓글 분석으로, SCORE를 측정, 긍정 부정 분류',
+            responses={
             400: "Bad request. need 'new_sentence'",
             500: "Cannot find the AI Model"
         })
