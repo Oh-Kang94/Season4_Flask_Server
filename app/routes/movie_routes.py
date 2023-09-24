@@ -12,11 +12,19 @@ def movie_routes(movie_ns):
             500: "Failed to create movies"
         })
         def get(self):
-            result = MoiveService.create_movie()
-            if result:
-                return {'message': 'Movies created successfully'}, 200
+            # Movie 먼저 생성
+            resultMovie = MoiveService.create_movie()
+            
+            if resultMovie:
+                # Movie 생성이 성공했을 경우에만 Cast 생성
+                resultCast = MoiveService.create_cast()
+                    
+                if resultCast:
+                    return {'message': 'Movies and Cast created successfully'}, 200
+                else:
+                    return {'message': 'Failed to create Cast'}, 500
             else:
-                return {'message': 'Failed to create movies'}, 500
+                return {'message': 'Failed to create Movies'}, 500
 
     @movie_ns.route('/get')
     class CreateMovie(Resource):

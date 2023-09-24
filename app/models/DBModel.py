@@ -17,7 +17,7 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ott = db.Column(db.String(45))
     title = db.Column(db.String(45))
-    imagepath = db.Column(db.String(45))
+    imagepath = db.Column(db.Text)
     releasedate = db.Column(db.String(45))
     genre = db.Column(db.String(45))
     totalaudience = db.Column(db.Integer)
@@ -39,4 +39,15 @@ class Review(db.Model):
     # Define relationships
     user = db.relationship('User', backref='reviews')
     movie = db.relationship('Movie', backref='reviews')
+
+class Cast(db.Model):
+    __tablename__ = "cast"
+    id = db.Column(db.Integer, primary_key=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
+    imgpath = db.Column(db.Text)
+    name = db.Column(db.String(45))
+    role = db.Column(db.String(45))
+
+    # Define relationships
+    movie = db.relationship('Movie', backref='casts')
 

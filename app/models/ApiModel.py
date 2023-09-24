@@ -23,10 +23,18 @@ Movie_fields = api.namespace('movie').model('movie', {
     'totalaudience': fields.Integer(description='Total Audience', example=1000000),
     'country': fields.String(description='Country', example='USA'),
     'rating': fields.String(description='Rating', example='PG-13'),
-    'star': fields.Float(description='Star', example=4.5),
+    'star': fields.Float(description='Star', example= 4.5),
     'runningtime': fields.Integer(description='Running Time', example=150),
     'summary': fields.String(description='Summary', example='A mind-bending thriller about dreams and reality.'),
 })
+
+Cast_fields = api.namespace('cast').model('cast', {
+    'id': fields.Integer(description='ID', example=1),
+    'imgpath': fields.String(description='Image Path', example='/path/to/image.jpg'),
+    'name': fields.String(description='Name', example='Leonardo DiCaprio'),
+    'role': fields.String(description='Role', example='Cobb'),
+})
+
 
 Review_fields = api.namespace('Review').model('Review', {
     'user_email': fields.String(description='User Email', example='user@example.com'),

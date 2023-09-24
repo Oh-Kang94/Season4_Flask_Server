@@ -1,4 +1,5 @@
-from ..models.DBModel import Movie
+from ..models.DBModel import Movie, Cast
+from sqlalchemy import text
 from ..config.Config import db
 import csv
 
@@ -6,12 +7,21 @@ class MoiveService:
     @staticmethod
     def create_movie():
         # CSV 파일 경로 설정
+        db.session.query(Movie).delete()
+
+        db.session.execute(text('ALTER TABLE movie AUTO_INCREMENT = 1;'))
         csv_file_path = 'app/static/MovieDataList.csv'  # 여기에 실제 파일 경로를 넣어주세요
 
         # CSV 파일을 읽어와서 데이터베이스에 삽입
         with open(csv_file_path, 'r', encoding='utf-8') as file:
             csv_reader = csv.DictReader(file)
             for row in csv_reader:
+                # UTF-8 관련 예외 처리
+                try:
+                    summary=row['summary']
+                except ValueError:
+                    summary = '0'
+                
                 new_movie = Movie(
                     ott=row['ott'],
                     title=row['title'],
@@ -26,6 +36,30 @@ class MoiveService:
                     summary=row['summary']
                 )
                 db.session.add(new_movie)
+
+        # 데이터베이스에 변경사항 반영
+        db.session.commit()
+        return True
+    
+    @staticmethod
+    def create_cast():
+        # CSV 파일 경로 설정
+        csv_file_path = 'app/static/MovieCastData.csv'
+        # db.session.query(Cast).delete()
+
+        db.session.execute(text('ALTER TABLE cast AUTO_INCREMENT = 1;'))
+
+        # CSV 파일을 읽어와서 데이터베이스에 삽입
+        with open(csv_file_path, 'r', encoding='utf-8') as file:
+            csv_reader = csv.DictReader(file)
+            for row in csv_reader:
+                new_cast = Cast(
+                    movie_id = row['movie_id'],
+                    imgpath=row['imgpath'],
+                    name=row['name'],
+                    role=row['role']
+                )
+                db.session.add(new_cast)
 
         # 데이터베이스에 변경사항 반영
         db.session.commit()
