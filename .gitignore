@@ -212,4 +212,7 @@ Temporary Items
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+# 서버로그
 nohup.out
+flask.pid
