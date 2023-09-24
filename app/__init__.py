@@ -1,5 +1,4 @@
 #-*- coding: utf-8 -*-
-from dotenv import load_dotenv
 import os 
 from flask import Flask
 from flask_cors import CORS

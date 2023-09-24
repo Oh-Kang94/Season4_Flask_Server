@@ -1,7 +1,5 @@
-from flask_restx import Resource, fields, abort
-from ..models.ApiModel import Movie_fields
+from flask_restx import Resource
 from ..services.movie_service import MoiveService
-from ..config.Config import api
 
 def movie_routes(movie_ns):
     @movie_ns.route('/movie')
