@@ -87,3 +87,19 @@ class MoiveService:
             movie_list.append(movie_data)
         db.session.commit()
         return movie_list
+    
+    @staticmethod
+    def get_cast():
+        casts = Cast.query.all()
+        cast_list = []
+        for cast in casts:
+            cast_data = {
+                'id': cast.id,
+                'movie_id' : cast.movie_id,
+                'imagepath' : cast.imagepath,
+                'name' : cast.name,
+                'role' : cast.role,
+            }
+            cast_list.append(cast_data)
+        db.session.commit()
+        return cast_list
