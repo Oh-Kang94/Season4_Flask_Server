@@ -35,18 +35,24 @@ Cast_fields = api.namespace('cast').model('cast', {
     'role': fields.String(description='Role', example='Cobb'),
 })
 
-
 Review_fields = api.namespace('Review').model('Review', {
     'user_email': fields.String(description='User Email', example='user@example.com'),
     'movie_id': fields.Integer(description='Movie ID', example=1),
     'content': fields.String(description='Content'),
     'rating': fields.Float(description='Rating', example=4.5),
-    'insertdate': fields.String(description='Insert Date', example='2023-09-21'),
+    'insertdate': fields.String(description='Insert Date', example='2023.09.21'),
     'deletedate': fields.String(description='Delete Date', required=False, nullable=True, example=None),
 })
 
-login_fields = api.namespace('Auth').model('Auth', {
-    'email': fields.String(required=True, example='okh19941994@navr.com'),
-    'password': fields.String(required=True, example='string')
+ReviewWrite_fields= api.namespace('Review').model('Review', {
+    'user_email': fields.String(description='User Email', example='okh19941994@naver.com'),
+    'movie_id': fields.Integer(description='Movie ID', example=1),
+    'content': fields.String(description='Content', example='재미있어요.'),
+    'rating': fields.Float(description='Rating', example=4.5),
+})
+
+Login_fields = api.namespace('Auth').model('Auth', {
+    'email': fields.String(required=True, example='okh19941994@naver.com'),
+    'password': fields.String(required=True, example='1234')
 })
 

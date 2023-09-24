@@ -18,10 +18,3 @@ class UsersService:
     @staticmethod
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
-    
-    @staticmethod
-    def set_refreshtoken(email, refreshtoken):
-        user = User.query.filter_by(email=email).first()
-        user.refreshtoken = refreshtoken
-        db.session.commit()
-        return True

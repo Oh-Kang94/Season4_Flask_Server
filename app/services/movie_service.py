@@ -96,7 +96,7 @@ class MoiveService:
             cast_data = {
                 'id': cast.id,
                 'movie_id' : cast.movie_id,
-                'imagepath' : cast.imagepath,
+                'imgpath' : cast.imgpath,
                 'name' : cast.name,
                 'role' : cast.role,
             }
