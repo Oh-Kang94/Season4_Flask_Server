@@ -7,7 +7,7 @@ from ..config.Config import api
 from flask_jwt_extended import jwt_required
 
 def review_routes(review_ns, auth_ns):
-    @review_ns.route('/write')
+    @review_ns.route('/')
     class CreateReview(Resource):
         @jwt_required()
         @auth_ns.doc(security='Bearer')
@@ -34,7 +34,7 @@ def review_routes(review_ns, auth_ns):
             else:
                 return {'message': 'Already wrote Review'}, 500
 
-    @review_ns.route('/get/<int:movie_id>')
+    @review_ns.route('/<int:movie_id>')
     class GetReview(Resource):
         def get(self, movie_id):
             result = ReviewService.get_review_all(movie_id)
@@ -42,9 +42,7 @@ def review_routes(review_ns, auth_ns):
                 return {'result': marshal(result, Review_fields)}, 200
             else:
                 return {'message': 'Review not found'}, 404
-            
-    @review_ns.route('/')
-    class UpdateReview(Resource):
+        
         @jwt_required()
         @auth_ns.doc(security='Bearer')
         @api.expect(ReviewWrite_fields)  # review_fields 모델을 정의해야 함
@@ -69,10 +67,8 @@ def review_routes(review_ns, auth_ns):
                 return {'message': 'Review updated successfully'}, 200
             else:
                 return {'message': 'Review not found'}, 404
-
-    
-    @review_ns.route('/<int:movie_id>')
-    class DeleteReview(Resource):
+            
+        
         @jwt_required()
         @auth_ns.doc(security='Bearer')
         def delete(self, movie_id):
