@@ -89,6 +89,11 @@ class MoiveService:
         return movie_list
     
     @staticmethod
+    def get_movie_one(movie_id):
+        return Movie.query.filter_by(id=movie_id).first()
+
+    
+    @staticmethod
     def get_cast():
         casts = Cast.query.all()
         cast_list = []
@@ -103,3 +108,7 @@ class MoiveService:
             cast_list.append(cast_data)
         db.session.commit()
         return cast_list
+    
+    @staticmethod
+    def get_cast_one(movie_id):
+        return Cast.query.filter_by(movie_id=movie_id).all()
