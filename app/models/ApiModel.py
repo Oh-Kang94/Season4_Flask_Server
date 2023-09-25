@@ -35,12 +35,21 @@ Cast_fields = api.namespace('cast').model('cast', {
 })
 
 Review_fields = api.namespace('Review').model('Review', {
-    'user_email': fields.String(description='User Email', example='user@example.com'),
+    'user_email': fields.String(description='User Email', required=False, nullable=True, example='user@example.com'),
+    'nickname': fields.String(description='User Nickname', required=False, nullable=True, example='ohKang94'),
     'movie_id': fields.Integer(description='Movie ID', example=1),
     'content': fields.String(description='Content'),
     'rating': fields.Float(description='Rating', example=4.5),
     'insertdate': fields.String(description='Insert Date', example='2023.09.21'),
     'deletedate': fields.String(description='Delete Date', required=False, nullable=True, example=None),
+})
+
+Review_field_result = api.namespace('ReviewResult').model('Review', {
+    'nickname': fields.String(description='User Nickname', example='ohKang94'),
+    'movie_id': fields.Integer(description='Movie ID', example=1),
+    'content': fields.String(description='Content'),
+    'rating': fields.Float(description='Rating', example=4.5),
+    'insertdate': fields.String(description='Insert Date', example='2023.09.21'),
 })
 
 ReviewWrite_fields= api.namespace('Review').model('Review', {

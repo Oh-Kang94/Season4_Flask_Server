@@ -20,3 +20,7 @@ class UsersService:
     @staticmethod
     def get_user_by_nickname(nickname):
         return User.query.filter_by(nickname=nickname).first()
+    
+    @staticmethod
+    def get_nickname_by_email(email):
+        return User.query.filter_by(email=email).first().nickname
