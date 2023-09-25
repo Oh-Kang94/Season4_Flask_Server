@@ -27,7 +27,7 @@ def user_routes(user_ns):
             new_user = UsersService.create_user(data)
             return {'message': 'User created successfully', 'email': new_user.email}, 200
     
-    @user_ns.route('/email/<string:email>:')
+    @user_ns.route('/email/<string:email>')
     class findEmail(Resource):
         @user_ns.doc(
             description = '아이디 중복 확인',
@@ -40,7 +40,7 @@ def user_routes(user_ns):
                 return {'message': 'Email Duplicated'}, 400
             return {'message': 'Success'}, 200
         
-    @user_ns.route('/nickname/<string:nickname>:')
+    @user_ns.route('/nickname/<string:nickname>')
     class findNickname(Resource):
         @user_ns.doc(
             description = '닉네임 중복 확인',
