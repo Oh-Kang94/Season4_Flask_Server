@@ -8,8 +8,6 @@ class UsersService:
             password=data['password'], 
             name= data['name'], 
             nickname = data['nickname'],
-            insertdate = data['insertdate'],
-            address = data['address']
         )
         db.session.add(new_user)
         db.session.commit()
@@ -18,3 +16,7 @@ class UsersService:
     @staticmethod
     def get_user_by_email(email):
         return User.query.filter_by(email=email).first()
+    
+    @staticmethod
+    def get_user_by_nickname(nickname):
+        return User.query.filter_by(nickname=nickname).first()

@@ -8,8 +8,7 @@ class User(db.Model):
     password = db.Column(db.String(45))
     name = db.Column(db.String(45))
     nickname = db.Column(db.String(45))
-    address = db.Column(db.String(45))
-    insertdate = db.Column(db.String(45))
+    insertdate = db.Column(db.String(45), nullable=True)
     deletedate = db.Column(db.String(45), nullable=True)  # deletedate를 nullable로 설정
 
 class Movie(db.Model):

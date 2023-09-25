@@ -8,9 +8,8 @@ User_fields = api.namespace('User').model('User', {
     'password': fields.String(description='Password'),
     'name': fields.String(description='Name'),
     'nickname': fields.String(description='Nickname'),
-    'address': fields.String(description='Address'),
-    'insertdate': fields.String(description='Insert Date'),
-    'deletedate': fields.String(description='Delete Date', required=False, nullable=True, example=None),
+    'insertdate': fields.String(description='Insert Date', required=False, nullable=True, example='2000.01.01'),
+    'deletedate': fields.String(description='Delete Date', required=False, nullable=True, example='2000.01.01'),
 })
 
 Movie_fields = api.namespace('movie').model('movie', {
