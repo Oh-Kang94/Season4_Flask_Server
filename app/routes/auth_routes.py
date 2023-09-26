@@ -23,7 +23,9 @@ def auth_routes(auth_ns):
                 return {
                     'message': 'Logged in successfully',
                     'access_token': access_token,
-                    'refresh_token': refresh_token
+                    'refresh_token': refresh_token,
+                    'name' : user.name,
+                    'nickname' : user.nickname
                 }, 200
             return {'message': 'Invalid credentials'}, 401
     @auth_ns.route('/access')
