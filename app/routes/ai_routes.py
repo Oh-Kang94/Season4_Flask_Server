@@ -35,9 +35,9 @@ def ai_routes(ai_ns):
             'title': fields.String(description='100자 이내의 문장.', example = '잠')
         }))
         @ai_ns.doc(
-            description = '댓글 분석으로, SCORE를 측정, 긍정 부정 분류',
+            description = '코사인 유사도로 추천 검색어 Top5',
             responses={
-            400: "Bad request. need 'new_sentence'",
+            400: "Bad request. need 'title'",
             500: "Cannot find the AI Model"
         })
         def post(self):

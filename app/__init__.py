@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 import os 
-from flask import Flask
+from flask import Flask, render_template
 from flask_cors import CORS
 from .config.Config import api, db, jwt
 from .config.DBConfig import DBConfig
@@ -19,6 +19,9 @@ db.init_app(app)
 jwt.init_app(app)
 register_namespaces(api)
 
+@app.route('/map/preview')
+def previewMap():
+    return render_template('movie.html')
 
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
