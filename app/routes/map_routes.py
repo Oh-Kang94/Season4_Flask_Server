@@ -12,7 +12,7 @@ def map_routes(map_ns):
             'longitude': fields.Float(description='경도', example = '127.072594')
         }))
         @map_ns.doc(
-            description = '영화관 검색\n영화관 검색은 http://oh-kang.kro.kr:18712/map/preview 로 참고',
+            description = '영화관 검색\n영화관 검색은 http://www.oh-kang.kro.kr:18712/map/preview 로 참고',
             responses={
             400: "Bad request. need 'review'",
             500: "Cannot find the AI Model"

@@ -24,10 +24,7 @@ def ai_routes(ai_ns):
                 score = AI_Service.AI_predict(review)
             except OSError:
                 abort(500, error="Cannot find the AI Model")
-            if (score > 0.5):
-                return {"results": "{:.2f}% 확률로 긍정 리뷰입니다.".format(score * 100)}
-            else:
-                return {"results": "{:.2f}% 확률로 부정 리뷰입니다.".format((1 - score) * 100)}
+            return {"results": "{:.2f}".format(score * 100)}
             
     @ai_ns.route("/search/")
     class Test(Resource):
