@@ -17,7 +17,7 @@ def register_namespaces(api):
     review_ns = Namespace('review', description='Review 관련 CRUD')
     map_ns = Namespace('map', description='MAP 검색')
 
-    user_routes(user_ns)
+    user_routes(user_ns, auth_ns)
     auth_routes(auth_ns)
     ai_routes(ai_ns)
     movie_routes(movie_ns)

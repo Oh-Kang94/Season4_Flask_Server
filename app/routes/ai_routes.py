@@ -46,4 +46,4 @@ def ai_routes(ai_ns):
                 result = AI_Service.get_recommend_movie_list(title)
             except OSError:
                 abort(500, error="Cannot find the AI Model")
-            return {"results": result}
+            return {"result": result}

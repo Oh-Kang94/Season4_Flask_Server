@@ -24,3 +24,16 @@ class UsersService:
     @staticmethod
     def get_nickname_by_email(email):
         return User.query.filter_by(email=email).first().nickname
+    
+    @staticmethod
+    def update_nickname(email, new_nickname):
+        # 이메일을 기반으로 사용자를 찾습니다.
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            # 사용자가 존재하면 닉네임을 업데이트하고 저장합니다.
+            user.nickname = new_nickname
+            db.session.commit()
+            return True
+        else:
+            return False

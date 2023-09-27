@@ -1,8 +1,11 @@
 from flask_restx import Resource, fields
+from ..services.auth_service import Auth_Service
+from flask import request
 from ..config.Config import api
 from ..services.user_service import UsersService
+from flask_jwt_extended import jwt_required
 
-def user_routes(user_ns):
+def user_routes(user_ns, auth_ns):
     @user_ns.route('/registration')
     class Register(Resource):
         @user_ns.doc(
@@ -52,3 +55,33 @@ def user_routes(user_ns):
             if UsersService.get_user_by_nickname(nickname):
                 return {'message': 'Nickname Duplicated'}, 400
             return {'message': 'Success'}, 200
+        
+
+        @jwt_required()
+        @auth_ns.doc(security='Bearer')
+        @user_ns.doc(
+            description='닉네임 변경',
+            responses={
+                401: 'Invalid token',
+                400: 'Missing Authorization header',
+                200: 'Nickname updated successfully',
+                300: 'Server Error'
+            })
+        @user_ns.expect()
+        def put(self, nickname):
+            authorization_header = request.headers.get('Authorization')
+            if authorization_header and authorization_header.startswith('Bearer '):
+                decoded_token = Auth_Service.decode_token(authorization_header)
+                if decoded_token:
+                    # 여기서 'sub'는 사용자의 이메일 주소를 의미합니다.
+                    user_email = decoded_token.get('sub')
+                else:
+                    return {'message': 'Invalid token'}, 401
+            else:
+                return {'message': "Invalid or missing Authorization header"}, 400
+            if UsersService.update_nickname(user_email, nickname):
+                return {'message': 'Nickname updated successfully'}, 200
+            else:
+                return {'message': 'Server Error'}, 300
+    
+    
