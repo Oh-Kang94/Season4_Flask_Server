@@ -84,4 +84,37 @@ def user_routes(user_ns, auth_ns):
             else:
                 return {'message': 'Server Error'}, 300
     
-    
+    @user_ns.route('/password')
+    class changePassword(Resource):
+        @user_ns.doc(
+            description = '패스워드 변경',
+            responses={
+            401: 'Invalid token',
+            400: 'Missing Authorization header',
+            200: 'User updated successfully',
+            403: 'Wrong Password'
+        })
+        @user_ns.expect(api.model('Password', {
+            'current': fields.String(description='현재 비밀번호', example = 'asdjifnaisndfoiajsdfjaosdjfdsa'),
+            'new': fields.String(description='신 비밀번호', example = 'dsjfnjklnfdjglsnlkfjiwesfidnfilss'),
+        }))
+        @jwt_required()
+        @auth_ns.doc(security='Bearer')
+        def post(self):
+            authorization_header = request.headers.get('Authorization')
+            if authorization_header and authorization_header.startswith('Bearer '):
+                decoded_token = Auth_Service.decode_token(authorization_header)
+                if decoded_token:
+                    # 여기서 'sub'는 사용자의 이메일 주소를 의미합니다.
+                    user_email = decoded_token.get('sub')
+                else:
+                    return {'message': 'Invalid token'}, 401
+            else:
+                return {'message': "Invalid or missing Authorization header"}, 400
+            data = api.payload
+            currentPW = data['current']
+            newPW = data['new']
+            if UsersService.update_password(user_email,currentPW,newPW ):
+                return {'message': 'User updated successfully'}, 200
+            else:
+                return {'message': 'Wrong Password'}, 403

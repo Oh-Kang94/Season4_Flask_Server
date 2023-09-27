@@ -37,3 +37,17 @@ class UsersService:
             return True
         else:
             return False
+        
+    @staticmethod
+    def update_password(email, password, new_password):
+        user = User.query.filter_by(email = email).first()
+
+        if user:
+            if user.password == password:
+                user.password = new_password
+                db.session.commit()
+                return True
+            else:
+                return False
+        else:
+            return False
