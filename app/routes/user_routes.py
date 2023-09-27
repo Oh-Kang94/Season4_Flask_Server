@@ -100,7 +100,7 @@ def user_routes(user_ns, auth_ns):
         }))
         @jwt_required()
         @auth_ns.doc(security='Bearer')
-        def post(self):
+        def put(self):
             authorization_header = request.headers.get('Authorization')
             if authorization_header and authorization_header.startswith('Bearer '):
                 decoded_token = Auth_Service.decode_token(authorization_header)
