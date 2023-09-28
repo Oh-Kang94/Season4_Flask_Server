@@ -20,13 +20,17 @@ def auth_routes(auth_ns):
                 access_token = create_access_token(identity=email)
                 refresh_token = create_refresh_token(identity=email)
                 Auth_Service.set_refreshtoken(refreshtoken=refresh_token,email=email)
-                return {
+                response =  {
                     'message': 'Logged in successfully',
-                    'access_token': access_token,
-                    'refresh_token': refresh_token,
                     'name' : user.name,
                     'nickname' : user.nickname
-                }, 200
+                },
+                # header를 태운다.
+                response_headers = {
+                'access_token': access_token,
+                'refresh_token': refresh_token,
+                }
+                return response, 200, response_headers
             return {'message': 'Invalid credentials'}, 401
     @auth_ns.route('/access')
     class Refresh(Resource):
