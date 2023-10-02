@@ -17,6 +17,12 @@ Swift App을 위한 Flask 기반의 서버입니다.
 
 ### 간략 설명 
 
+### 설치 방법
+    pip install -r requirements.txt
+    ** 실행시,
+    flask run
+    ** 백그라운드에서 실행시,
+    nohup flask run --host=0.0.0.0
 
 ## 기술 스택
   <img src="https://skillicons.dev/icons?i=aws,mysql,py,flask,tensorflow"/>
