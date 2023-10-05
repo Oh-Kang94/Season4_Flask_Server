@@ -1,24 +1,28 @@
 import re 
-from konlpy.tag import Okt
-from keras.preprocessing.text import Tokenizer
-from keras.models import load_model
-from keras.preprocessing.sequence import pad_sequences  # 시퀀스를 패딩하는 데 사용되는 라이브러리
+from tensorflow.keras.preprocessing.text import Tokenizer  # 텍스트 데이터를 토큰화하기 위한 모듈
+from tensorflow.keras.preprocessing.sequence import pad_sequences  # 시퀀스 데이터 패딩을 위한 모듈
+from tensorflow.keras.models import load_model  # 저장된 딥러닝 모델을 불러오기 위한 모듈
 import pandas as pd
-import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from .movie_service import MoiveService
+from kiwipiepy import Kiwi  # 형태소 분석을 위한 Kiwipie 패키지
+import pickle
 
 
 
 class AI_Service:
-    def AI_predict(new_sentence):
+    kiwi = Kiwi()
+    loaded_model = load_model('./app/static/best_model.h5')
+    with open('./app/static/tokenizer.pickle', 'rb') as handle:
+        tokenizer = pickle.load(handle)
+    def AI_predict(self, new_sentence):
         new_sentence = re.sub(r'[^ㄱ-ㅎㅏ-ㅣ가-힣 ]','', new_sentence)
-        new_sentence = Okt().morphs(new_sentence, stem=True) # 토큰화
-        encoded = Tokenizer().texts_to_sequences([new_sentence]) # 정수 인코딩
-        pad_new = pad_sequences(encoded, maxlen = 100) # 패딩
-        loaded_model = load_model("./app/static/best_model.h5")
-        score = float(loaded_model.predict(pad_new)) # 예측
+        new_sentence = self.kiwi.tokenize(new_sentence)
+        new_sentence = [x.form for x in new_sentence]
+        encoded = self.tokenizer.texts_to_sequences([new_sentence]) # 정수 인코딩
+        pad_new = pad_sequences(encoded, maxlen = 60) # 패딩
+        score = float(self.loaded_model.predict(pad_new)) # 예측
         return score
     
     def get_recommend_movie_list(title):

@@ -21,10 +21,10 @@ def ai_routes(ai_ns):
             except KeyError:
                 abort(400, error="Bad request. need 'review'")
             try:
-                score = AI_Service.AI_predict(review)
+                score = AI_Service.AI_predict(AI_Service, review)
             except OSError:
                 abort(500, error="Cannot find the AI Model")
-            return {"results": "{:.2f}".format(score * 100)}
+            return {"results": "{:.2f}".format(score)}
             
     @ai_ns.route("/search/")
     class Test(Resource):
