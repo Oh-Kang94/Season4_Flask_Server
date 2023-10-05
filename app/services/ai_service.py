@@ -17,7 +17,7 @@ class AI_Service:
         new_sentence = Okt().morphs(new_sentence, stem=True) # 토큰화
         encoded = Tokenizer().texts_to_sequences([new_sentence]) # 정수 인코딩
         pad_new = pad_sequences(encoded, maxlen = 100) # 패딩
-        loaded_model = load_model("./app/static/crawling_best_model.h5")
+        loaded_model = load_model("./app/static/best_model.h5")
         score = float(loaded_model.predict(pad_new)) # 예측
         return score
     
