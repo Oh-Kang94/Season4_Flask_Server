@@ -48,7 +48,7 @@ def user_routes(user_ns, auth_ns):
         @user_ns.doc(
             description = '닉네임 중복 확인',
             responses={
-            400: 'Nickname Duplicated',
+            403: 'Nickname Duplicated',
             200: 'Success',
         })
         def get(self, nickname):
@@ -62,10 +62,11 @@ def user_routes(user_ns, auth_ns):
         @user_ns.doc(
             description='닉네임 변경',
             responses={
-                401: 'Invalid token',
-                400: 'Missing Authorization header',
                 200: 'Nickname updated successfully',
-                300: 'Server Error'
+                300: 'Server Error',
+                400: 'Missing Authorization header',
+                401: 'Invalid token',
+                403: 'Nickname Duplicated',
             })
         @user_ns.expect()
         def put(self, nickname):
@@ -80,6 +81,8 @@ def user_routes(user_ns, auth_ns):
             else:
                 return {'message': "Invalid or missing Authorization header"}, 400
             if UsersService.update_nickname(user_email, nickname):
+                if UsersService.get_user_by_nickname(nickname):
+                    return {'message': 'Nickname Duplicated'}, 403
                 return {'message': 'Nickname updated successfully'}, 200
             else:
                 return {'message': 'Server Error'}, 300
