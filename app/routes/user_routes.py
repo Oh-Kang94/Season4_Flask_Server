@@ -80,9 +80,9 @@ def user_routes(user_ns, auth_ns):
                     return {'message': 'Invalid token'}, 401
             else:
                 return {'message': "Invalid or missing Authorization header"}, 400
+            if UsersService.get_user_by_nickname(nickname):
+                return {'message': 'Nickname Duplicated'}, 403
             if UsersService.update_nickname(user_email, nickname):
-                if UsersService.get_user_by_nickname(nickname):
-                    return {'message': 'Nickname Duplicated'}, 403
                 return {'message': 'Nickname updated successfully'}, 200
             else:
                 return {'message': 'Server Error'}, 300
